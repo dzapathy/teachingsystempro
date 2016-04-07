@@ -9,6 +9,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import com.bean.Section;
+import com.bean.SectionId;
 
 /**
  * A data access object (DAO) providing persistence and search support for
@@ -58,6 +59,17 @@ public class SectionDAO extends HibernateDaoSupport {
 			Section instance = (Section) getHibernateTemplate().get(
 					"com.bean.Section", id);
 			return instance;
+		} catch (RuntimeException re) {
+			log.error("get failed", re);
+			throw re;
+		}
+	}
+	
+	public Section findById2(SectionId id){
+		log.debug("getting Section instance with id: " + id);
+		try {
+			String hql ="from Section s where s.id.cid ="+id.getCid()+" and s.id.seid = "+id.getSeid();
+			return (Section)getHibernateTemplate().find(hql).listIterator().next();
 		} catch (RuntimeException re) {
 			log.error("get failed", re);
 			throw re;

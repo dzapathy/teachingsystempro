@@ -12,7 +12,9 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
+import com.bean.Section;
 import com.bean.Takes;
+import com.bean.TakesId;
 
 /**
  * A data access object (DAO) providing persistence and search support for Takes
@@ -107,6 +109,28 @@ public class TakesDAO extends HibernateDaoSupport {
 			Takes instance = (Takes) getHibernateTemplate().get(
 					"com.bean.Takes", id);
 			return instance;
+		} catch (RuntimeException re) {
+			log.error("get failed", re);
+			throw re;
+		}
+	}
+	
+	public Takes findById2(TakesId id){
+		log.debug("getting Takes instance with id: " + id);
+		try {
+			final String hql ="from Takes t where t.id.stid ="+id.getStid()
+					+" and t.id.cid = "+id.getCid()+"  and t.id.seid = "+id.getSeid();
+			List list = getHibernateTemplate().executeFind(new HibernateCallback() {
+				@Override
+				public Object doInHibernate(Session session)
+						throws HibernateException, SQLException {
+					return session.createQuery(hql).list();
+				}
+			});
+			if(list.size()!=0)
+				return (Takes) list.get(0);
+			else
+				return null;
 		} catch (RuntimeException re) {
 			log.error("get failed", re);
 			throw re;

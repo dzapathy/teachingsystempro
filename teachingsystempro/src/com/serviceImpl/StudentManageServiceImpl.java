@@ -4,9 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.bean.Course;
+import com.bean.Section;
+import com.bean.SectionId;
 import com.bean.StudentBasic;
 import com.bean.Takes;
 import com.bean.TakesId;
+import com.dao.SectionDAO;
 import com.dao.StudentBasicDAO;
 import com.dao.TakesDAO;
 import com.opensymphony.xwork2.ActionContext;
@@ -15,15 +18,19 @@ import com.service.StudentManageService;
 public class StudentManageServiceImpl implements StudentManageService {
 	private TakesDAO takesDAO;
 	private StudentBasicDAO studentBasicDAO;
+	private SectionDAO sectionDAO;
 	
 	@Override
 	public List<String> daoStudent(Short seid , List<String> list) {
 		List<String> fails = new ArrayList<String>();
 		Course course = (Course)ActionContext.getContext().getSession().get("course");
+		Section section = sectionDAO.findById2(new SectionId(course.getCid(), seid));
+		System.out.println(section.getSeendTime());
 		for(String str : list){
-			StudentBasic stu = studentBasicDAO.findById(str);
-			if(stu!=null){
-				takesDAO.save(new Takes());
+			StudentBasic studentBasic = studentBasicDAO.findById(str);
+			if(studentBasic != null){
+				if(takesDAO.findById2(new TakesId(str, course.getCid(), seid))==null)
+					takesDAO.save(new Takes(new TakesId(str, course.getCid(), seid), section, studentBasic));
 			}else{
 				fails.add(str);
 			}
@@ -79,5 +86,13 @@ public class StudentManageServiceImpl implements StudentManageService {
 
 	public void setStudentBasicDAO(StudentBasicDAO studentBasicDAO) {
 		this.studentBasicDAO = studentBasicDAO;
+	}
+
+	public SectionDAO getSectionDAO() {
+		return sectionDAO;
+	}
+
+	public void setSectionDAO(SectionDAO sectionDAO) {
+		this.sectionDAO = sectionDAO;
 	}
 }

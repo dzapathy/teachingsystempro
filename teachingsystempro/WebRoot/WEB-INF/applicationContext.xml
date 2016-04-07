@@ -159,6 +159,7 @@
 	<bean id="studentManageService" class="com.serviceImpl.StudentManageServiceImpl">
 		<property name="studentBasicDAO" ref="StudentBasicDAO"></property>
 		<property name="takesDAO" ref="TakesDAO"></property>
+		<property name="sectionDAO" ref="SectionDAO"></property>
 	</bean>
 	<!-- 学生管理action -->
 	<bean id="studentManageAction" class="com.action.StudentManageAction" scope="prototype">

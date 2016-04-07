@@ -12,7 +12,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
-import com.bean.Course;
 import com.bean.Instructor;
 
 /**

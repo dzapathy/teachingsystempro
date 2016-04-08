@@ -266,7 +266,6 @@ public class BlankDAO extends HibernateDaoSupport {
 
 	public int findMaxId(final Integer cid, final short bchapter) {
 		List list = getHibernateTemplate().executeFind(new HibernateCallback() {
-
 			@Override
 			public Object doInHibernate(Session session)
 					throws HibernateException, SQLException {
@@ -279,7 +278,6 @@ public class BlankDAO extends HibernateDaoSupport {
 				return result;
 			}
 		});
-		return (Integer) list.get(0);
-	}
-	
+		return  list.get(0)==null?0:(Integer)list.get(0);
+	}	
 }

@@ -205,8 +205,7 @@ public class ChoiceDAO extends HibernateDaoSupport {
 
 			@Override
 			public Object doInHibernate(Session session)
-					throws HibernateException, SQLException {
-				
+					throws HibernateException, SQLException {				
 				String hql = "select max(chid) from choice b where b.cid = ? and b.chchapter = ?";
 				List result = session.createSQLQuery(hql)
 					.setParameter(0, cid)
@@ -214,8 +213,8 @@ public class ChoiceDAO extends HibernateDaoSupport {
 					.list();
 				return result;
 			}
-		});
-		return (Integer) list.get(0);
+		});		
+		return  list.get(0)==null?0:(Integer)list.get(0);
 	}
 
 	public List findAllPage(final Integer cid, final Short chapter, final Integer currentPage,final Integer pagesize) {

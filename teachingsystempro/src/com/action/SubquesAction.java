@@ -74,6 +74,7 @@ public class SubquesAction extends ActionSupport implements ModelDriven<Subques>
 		Course course = (Course)ActionContext.getContext().getSession().get("course");
 		List list = subquesService.findAllChoice(course.getCid(),chapter,pageBean); 
 		ActionContext.getContext().getValueStack().set("list", list);
+		ActionContext.getContext().getSession().put("selectedChapter", chapter);
 		return "findAll_success";
 	}
 		

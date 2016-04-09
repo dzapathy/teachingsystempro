@@ -75,6 +75,7 @@ public class ChoiceAction extends ActionSupport implements ModelDriven<Choice>{
 		Course course = (Course)ActionContext.getContext().getSession().get("course");		
 		List list = choiceService.findAllChoice(course.getCid(),chapter,pageBean); 
 		ActionContext.getContext().getValueStack().set("list", list);
+		ActionContext.getContext().getSession().put("selectedChapter", chapter);
 		return "findAll_success";
 	}
 	
@@ -108,7 +109,7 @@ public class ChoiceAction extends ActionSupport implements ModelDriven<Choice>{
 			String str = FileUploadYun.dealUpload( mediaType, upload,
 					uploadFileName);			
 			if(str == null || "".equals(str)){
-				Object[] choice2 = choiceService.findById(cid, chchapter, cid);
+				Object[] choice2 = choiceService.findById(cid, chchapter, chid);
 				choice.setChmediaurl((String) choice2[8]);
 			}else{
 				choice.setChmediaurl(str);

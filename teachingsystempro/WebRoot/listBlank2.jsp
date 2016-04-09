@@ -1,6 +1,7 @@
 <%@page import="com.bean.Course"%>
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE HTML>
 <html>
   <head> 
@@ -31,11 +32,18 @@
 				<form method="post">
 					<div id="up">
 						选择章节
-						<select name="chapter" id="chapter">
+						<%-- <select name="chapter" id="chapter">
 							<%for ( int i = 1 ; i < chapter+1 ; i++) {%>
 					      		<option value="<%=i%>">第<%=i%>章</option>
 					      	<%} %>
+						</select> --%>
+						
+						<select name="chapter" id="chapter">
+							<c:forEach begin="1" end="${course.cchapter }" step="1" var="num">
+								<option value="${num }" <c:if test="${num == selectedChapter}">selected</c:if> >第${num }章</option>
+							</c:forEach>
 						</select>
+						
 						<div class="btn-group">
 							<button onclick="toChoiceAction()" class="btn btn-success-outline">查看选择题</button>
 							<button onclick="toBlankAction()" class="btn btn-success">查看填空题</button>		
@@ -63,18 +71,25 @@
 								<button class="del" >删除</button>
 							</li>
 				    	</ul>
-				    </s:iterator>		    
-					<a href="${pageContext.request.contextPath }/blank_list?
-					currentPage=${pageBean.prePage}&
-					chapter=${list[0][1] } ">上一页</a>&nbsp;&nbsp;
-					<s:iterator value="%{pageBean.pagebar}" var="i">
-				 		<a href="${pageContext.request.contextPath }/blank_list?
-				 		currentPage=<s:property value='#i'/>&
-				 		chapter=${list[0][1] }"> <s:property value="#i"/> </a>&nbsp;&nbsp;
-					 </s:iterator>
-					<a href="${pageContext.request.contextPath }/blank_list?
-					currentPage=<s:property value='pageBean.nexPage'/>&
-					chapter=${list[0][1] }">下一页</a>&nbsp;&nbsp;
+				    </s:iterator>	
+				    <c:choose> 
+				       <c:when test="${list != null && list.size() > 0}">
+							<a href="${pageContext.request.contextPath }/blank_list?
+							currentPage=${pageBean.prePage}&
+							chapter=${list[0][1] } ">上一页</a>&nbsp;&nbsp;
+							<s:iterator value="%{pageBean.pagebar}" var="i">
+						 		<a href="${pageContext.request.contextPath }/blank_list?
+						 		currentPage=<s:property value='#i'/>&
+						 		chapter=${list[0][1] }"> <s:property value="#i"/> </a>&nbsp;&nbsp;
+							 </s:iterator>
+							<a href="${pageContext.request.contextPath }/blank_list?
+							currentPage=<s:property value='pageBean.nexPage'/>&
+							chapter=${list[0][1] }">下一页</a>&nbsp;&nbsp;
+						</c:when>
+						<c:otherwise>
+							<a disabled>上一页 </a>&nbsp;&nbsp;&nbsp;&nbsp;<a disabled>下一页 </a>
+						</c:otherwise>
+					</c:choose>	
 				</div>
 			</div>
 		</div>	

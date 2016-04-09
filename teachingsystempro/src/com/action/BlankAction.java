@@ -77,6 +77,7 @@ public class BlankAction extends ActionSupport implements ModelDriven<Blank>{
 		Course course = (Course)ActionContext.getContext().getSession().get("course");
 		List list = blankService.findAllBlank(course.getCid(),chapter,pageBean); 
 		ActionContext.getContext().getValueStack().set("list", list);
+		ActionContext.getContext().getSession().put("selectedChapter", chapter);
 		return "findAll_success";
 	}
 	

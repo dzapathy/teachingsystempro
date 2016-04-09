@@ -3,3 +3,4 @@
 使用技术：
   前台：bootstrap4，jquery2
   后台：struts2，spring3，hibernate3
+  数据库：mysql

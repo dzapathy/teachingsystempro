@@ -1,0 +1,73 @@
+body{
+      //background-image: url(../img/0.jpg);
+   }
+   nav #a{
+      margin-right:10px;
+   }
+   .carousel-item img{
+    margin: auto;
+    padding-top: 50px;
+   }
+   header {
+    border-radius: 10px;
+   } 
+   .navbar-right img {
+    border-radius:20px;
+    width: 40px;
+    height: 40px;
+    float: right;
+   }
+   .navbar-right li{
+    width: 60px;
+    height: 40px;
+   }
+
+   #leftnav{
+    float: left;
+    width: 18%;
+    min-width: 160px; 
+   }
+   #leftnav button {
+    float: left;
+    width: 60%;
+    margin-top: 50px;
+    margin-left: 20%;
+   }
+  #content {
+    float: left;
+    width: 82%;
+    height: 100%;
+    min-width: 470px;
+    padding-bottom: 50px;
+    border-left: 1px solid #dddddd;
+   }
+    #form3 {
+      width: 350px;
+      margin-top: 50px;
+      margin-left: 60px;
+    }
+    #form2 {
+      width: 350px;
+      margin-top: 50px;
+      margin-left: 60px;
+    }
+    #form1 {
+      width: 350px;
+      margin-top: 50px;
+      margin-left: 60px;
+    } 
+    html,body{
+      min-height:100%;
+    }   
+    #a {
+      margin-left: 90px;
+    }
+    .container {
+      width: 100%;
+      margin: 0;
+      background-color: blue;
+    }
+    select{
+     border: 1px solid #ccc;
+     border-radius: .25rem;
+    }

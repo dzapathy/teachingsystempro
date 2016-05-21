@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd">
+
+	<!-- 数据库配置 -->
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close">
+		<property name="driverClass" value="com.mysql.jdbc.Driver"></property>
+		<property name="jdbcUrl" value="jdbc:mysql://localhost/teachingsystem"></property>
+		<property name="user" value="root"></property>
+		<property name="password" value="123456"></property>
+		<property name="maxPoolSize" value="100"></property>
+		<property name="minPoolSize" value="1"></property>
+		<property name="initialPoolSize" value="1"></property>
+		<property name="maxIdleTime" value="20"></property>
+	</bean>
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+				  
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.format_sql">true</prop>
+				
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+			</props>
+		</property>
+		<property name="mappingResources">
+			<list>
+				<value>com/bean/StudentBasic.hbm.xml</value>
+				<value>com/bean/StudentDetail.hbm.xml</value>
+				<value>com/bean/Instructor.hbm.xml</value>
+				<value>com/bean/Course.hbm.xml</value>
+				<value>com/bean/Teaches.hbm.xml</value>
+				<value>com/bean/Takes.hbm.xml</value>
+				<value>com/bean/Subques.hbm.xml</value>
+				<value>com/bean/Section.hbm.xml</value>
+				<value>com/bean/Reply.hbm.xml</value>
+				<value>com/bean/Ppt.hbm.xml</value>
+				<value>com/bean/Posts.hbm.xml</value>
+				<value>com/bean/Media.hbm.xml</value>
+				<value>com/bean/Choice.hbm.xml</value>
+				<value>com/bean/Blank.hbm.xml</value>
+				<value>com/bean/Grade.hbm.xml</value>
+				<value>com/bean/Paperdetail.hbm.xml</value>
+				<value>com/bean/Paperform.hbm.xml</value></list>
+		</property></bean>
+	
+	<!-- Dao层配置 -->
+	<bean id="StudentBasicDAO" class="com.dao.StudentBasicDAO">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="StudentDetailDAO" class="com.dao.StudentDetailDAO">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="InstructorDAO" class="com.dao.InstructorDAO">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="CourseDAO" class="com.dao.CourseDAO">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="TeachesDAO" class="com.dao.TeachesDAO">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="TakesDAO" class="com.dao.TakesDAO">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="SubquesDAO" class="com.dao.SubquesDAO">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="SectionDAO" class="com.dao.SectionDAO">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="ReplyDAO" class="com.dao.ReplyDAO">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="PptDAO" class="com.dao.PptDAO">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="PostsDAO" class="com.dao.PostsDAO">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	
+	<bean id="MediaDAO" class="com.dao.MediaDAO">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="ChoiceDAO" class="com.dao.ChoiceDAO">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="BlankDAO" class="com.dao.BlankDAO">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="GradeDAO" class="com.dao.GradeDAO">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="PaperdetailDAO" class="com.dao.PaperdetailDAO">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="PaperformDAO" class="com.dao.PaperformDAO">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<!-- Service,Action配置 -->
+	<!-- 登录 -->
+	<bean id="loginService" class="com.serviceImpl.LoginServiceImpl">
+		<property name="instructorDAO" ref="InstructorDAO"></property>
+	</bean>
+	<bean id="courseService" class="com.serviceImpl.CourseServiceImpl">
+		<property name="courseDAO" ref="CourseDAO"></property>
+		<property name="mediaDAO" ref="MediaDAO"></property>
+		<property name="pptDAO" ref="PptDAO"></property>
+		<property name="teachesDAO" ref="TeachesDAO"></property>
+	</bean>
+	<bean id="loginAction" class="com.action.LoginAction" scope="prototype">
+		<property name="loginService" ref="loginService"></property>
+		<property name="courseSevice" ref="courseService"></property>
+	</bean>
+	<!-- 退出登录 -->
+	<bean id="exitAction" class="com.action.ExitAction" scope="prototype"></bean>
+	<!-- 注册 -->	
+	<bean id="registerService" class="com.serviceImpl.RegisterServiceImpl">
+		<property name="instructorDAO" ref="InstructorDAO"></property>
+	</bean>
+	<bean id="registerAction" class="com.action.RegisterAction" scope="prototype">
+		<property name="registerService" ref="registerService"></property>
+	</bean>
+	<!-- 修改信息 -->
+	<bean id="informationService" class="com.serviceImpl.InformationServiceImpl">
+		<property name="instructorDAO" ref="InstructorDAO"></property>
+	</bean>
+	<bean id="informationAction" class="com.action.InformationAction" scope="prototype">
+		<property name="informationService" ref="informationService"></property>
+	</bean>
+	<!-- 课程详情 -->
+	<bean id="courseDetailAction" class="com.action.CourseDetailAction" scope="prototype">
+		<property name="courseSevice" ref="courseService"></property>
+	</bean>
+	<!-- 创建课程 -->
+	<bean id="addCourseAction" class="com.action.CreateCourseAction" scope="prototype">
+		<property name="courseSevice" ref="courseService"></property>
+	</bean>
+	<bean id="instructorService" class="com.serviceImpl.InstructorServiceImpl">
+		<property name="instructorDAO" ref="InstructorDAO"></property>
+		<property name="sectionDAO" ref="SectionDAO"></property>
+		<property name="teachesDAO" ref="TeachesDAO"></property>
+		<property name="courseDAO" ref="CourseDAO"></property>
+	</bean>
+	<!-- 添加任课教师 -->
+	<bean id="addinstructorAction" class="com.action.AddCourseInsAction" scope="prototype">
+		<property name="instructorService" ref="instructorService"></property>
+	</bean>
+	<!-- 学生管理 service-->
+	<bean id="studentManageService" class="com.serviceImpl.StudentManageServiceImpl">
+		<property name="studentBasicDAO" ref="StudentBasicDAO"></property>
+		<property name="takesDAO" ref="TakesDAO"></property>
+		<property name="sectionDAO" ref="SectionDAO"></property>
+	</bean>
+	<!-- 学生管理action -->
+	<bean id="studentManageAction" class="com.action.StudentManageAction" scope="prototype">
+		<property name="studentManageService" ref="studentManageService"></property>
+	</bean>	
+	<!-- 视频管理service -->
+	<bean id="videoService" class="com.serviceImpl.VideoServiceImpl">
+		<property name="mediaDAO" ref="MediaDAO"></property>
+	</bean>
+	<!-- 视频管理action -->
+	<bean id="videoAction" class="com.action.VideoAction" scope="prototype">
+		<property name="videoService" ref="videoService"></property>
+	</bean>
+	<!-- PPT管理service -->
+	<bean id="pptservice" class="com.serviceImpl.PptServiceImpl">
+		<property name="pptDAO" ref="PptDAO"></property>
+	</bean>
+	<!-- PPT管理action -->
+	<bean id="pptAction" class="com.action.PptAction" scope="prototype">
+		<property name="pptService" ref="pptservice"></property>
+	</bean>
+	<!-- 上传视频 -->
+	<bean id="uploadVideoAction" class="com.action.UploadVideoAction" scope="prototype">
+		<property name="videoService" ref="videoService"></property>
+	</bean>
+	<!-- 上传PPT -->
+	<bean id="uploadPptAction" class="com.action.UploadPptAction" scope="prototype">
+		<property name="pptService" ref="pptservice"></property>
+	</bean>
+	<!-- Postservice -->
+	<bean id="postService" class="com.serviceImpl.PostServiceImpl">
+		<property name="postsDAO" ref="PostsDAO"></property>
+	</bean>
+	<!-- replyservice -->
+	<bean id="replyService" class="com.serviceImpl.ReplyServiceImpl">
+		<property name="replyDAO" ref="ReplyDAO"></property>
+		<property name="postsDAO" ref="PostsDAO"></property>
+	</bean>
+	<!-- 获取posts action -->
+	<bean id="getPostsAction" class="com.action.GetPostsAction" scope="prototype">
+		<property name="postService" ref="postService"></property>
+	</bean>
+	<!-- 获取reply列表 -->
+	<bean id="getReplyAction" class="com.action.GetReplyAction" scope="prototype">
+		<property name="replyService" ref="replyService"></property>
+	</bean>
+	<!-- paper Service -->
+	<bean id="paperService" class="com.serviceImpl.PaperServiceImpl">
+		<property name="paperformDAO" ref="PaperformDAO"></property>
+		<property name="paperdetailDAO" ref="PaperdetailDAO"></property>
+	</bean>
+	<!-- getPaper action -->
+	<bean id="getPaperAction" class="com.action.GetPaperAction" scope="prototype">
+		<property name="paperService" ref="paperService"></property>
+	</bean>
+	<!-- grade service -->
+	<bean id="gradeService" class="com.serviceImpl.GradeServiceImpl">
+		<property name="gradeDAO" ref="GradeDAO"></property>
+		<property name="paperdetailDAO" ref="PaperdetailDAO"></property>
+	</bean>
+	<!-- grade action -->
+	<bean id="gradeAction" class="com.action.GradeAction" scope="prototype">
+		<property name="gradeService" ref="gradeService"></property>
+	</bean>
+	<!-- 获取试题详情 -->
+	<bean id="getPaperDetailAction" class="com.action.GetPapersDetailAction" scope="prototype">
+		<property name="paperService" ref="paperService"></property>
+	</bean>
+	<!-- 在线批阅 -->
+	<bean id="markAction" class="com.action.MarkAction" scope="prototype">
+		<property name="paperService" ref="paperService"></property>
+	</bean>
+	<!-- 生成试卷 -->
+	<bean id="createpaperAction" class="com.action.CreatePaperAction" scope="prototype">
+		<property name="paperService" ref="paperService"></property>
+	</bean>
+	<!-- savePaperAction -->
+	<bean id="savePaperAction" class="com.action.SavePaperAction" scope="prototype">
+		<property name="paperService" ref="paperService"></property>
+	</bean>
+	
+	
+	<!-- 合并 -->
+	
+	<bean id="blankService" class="com.serviceImpl.BlankServiceImpl">
+		<property name="blankDao" ref="BlankDAO"></property>
+		<property name="courseDao" ref="CourseDAO"></property>
+	</bean>
+	<bean id="subquesService" class="com.serviceImpl.SubquesServiceImpl">
+		<property name="subquesDao" ref="SubquesDAO"></property>
+		<property name="courseDao" ref="CourseDAO"></property>
+	</bean>
+	<bean id="choiceService" class="com.serviceImpl.ChoiceServiceImpl">
+		<property name="choiceDao" ref="ChoiceDAO"></property>
+		<property name="courseDao" ref="CourseDAO"></property>
+	</bean>
+	<!-- 添加填空题 -->
+	<bean id="blankAction" class="com.action.BlankAction" scope="prototype">
+		<property name="blankService" ref="blankService"></property>
+	</bean>
+	<!-- 添加主观题 -->
+	<bean id="subquesAction" class="com.action.SubquesAction" scope="prototype">
+		<property name="subquesService" ref="subquesService"></property>
+	</bean>
+	<!-- 添加选择题 -->
+	<bean id="choiceAction" class="com.action.ChoiceAction" scope="prototype">
+		<property name="choiceService" ref="choiceService"></property>
+	</bean>
+	<!-- 播放媒体 -->
+	<bean id="mediaPlayAction" class="com.action.MediaPlayAction" scope="prototype">
+	</bean>
+	<!-- 导入学生  -->
+	<bean id="addStudentAction" class="com.action.AddStudentAction" scope="prototype">
+		<property name="studentManageService" ref="studentManageService"></property>
+	</bean>
+</beans>	

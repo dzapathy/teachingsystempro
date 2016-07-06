@@ -18,6 +18,7 @@ public class UploadPptAction extends ActionSupport{
 	private static final long serialVersionUID = -4096685073127129319L;
 	private PptService pptService;
 	private Ppt ppt = new Ppt();
+	
 	private File   uploadify;//上传文件file对象  
     private String uploadifyFileName;//上传文件名
     private Short chapter;

@@ -93,6 +93,7 @@
 					  	<a class="list-group-item" href="mgetvideos">资源管理</a>
 					  	<a class="list-group-item" href="createQuestion.jsp">题库建设</a>
 				  	</s:if>
+				  	<a class="list-group-item" href="coursesystem.jsp">课程体系</a>
 				</div>
 				<hr>
 				<h4>资料下载</h4>

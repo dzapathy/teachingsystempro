@@ -14,7 +14,7 @@
 </head>
 <body>
 	<div class="container-fluid">
-		<header class="navbar navbar-dark navbar-static-top bd-navbar" role="banner">
+	<header class="navbar navbar-dark navbar-static-top bd-navbar" role="banner">
 	  <div class="clearfix">	  
 	    <button class="navbar-toggler pull-right hidden-sm-up" type="button" data-toggle="collapse" data-target="#bd-main-nav">
 	      &#9776;

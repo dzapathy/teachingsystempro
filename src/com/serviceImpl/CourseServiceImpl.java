@@ -4,10 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.bean.Course;
+import com.bean.CoursePre;
+import com.bean.Coursesystem;
+import com.bean.CoursesystemId;
 import com.bean.Media;
 import com.bean.Ppt;
 import com.bean.TeachesId;
 import com.dao.CourseDAO;
+import com.dao.CoursesystemDAO;
 import com.dao.MediaDAO;
 import com.dao.PptDAO;
 import com.dao.TeachesDAO;
@@ -19,6 +23,7 @@ public class CourseServiceImpl implements CourseSevice {
 	private MediaDAO mediaDAO;
 	private PptDAO pptDAO;
 	private TeachesDAO teachesDAO;
+	private CoursesystemDAO coursesystemDAO;
 	
 	@Override
 	public List<Course> getCourses(String iid) {
@@ -97,5 +102,39 @@ public class CourseServiceImpl implements CourseSevice {
 
 	public void setTeachesDAO(TeachesDAO teachesDAO) {
 		this.teachesDAO = teachesDAO;
+	}
+
+	@Override
+	public List<CoursePre> getCourseSystem(Integer cid) {		
+		return coursesystemDAO.getCourseSys(cid);
+	}
+
+	public CoursesystemDAO getCoursesystemDAO() {
+		return coursesystemDAO;
+	}
+
+	public void setCoursesystemDAO(CoursesystemDAO coursesystemDAO) {
+		this.coursesystemDAO = coursesystemDAO;
+	}
+
+	@Override
+	public void editCourseSystem(List preCourse) {	
+		Integer cid = ((Course)ActionContext.getContext().getSession().get("course")).getCid();		
+		coursesystemDAO.deleteByCid(cid);		
+		for(Object pid:preCourse){
+			if(pid instanceof Integer){
+				coursesystemDAO.save(new Coursesystem(new CoursesystemId(cid, (Integer)pid)));
+			}
+		}		
+	}
+
+	@Override
+	public List getPreCourse(Integer cid) {		
+		return coursesystemDAO.findByCid(cid);
+	}
+
+	@Override
+	public List getAllCourse() {		
+		return courseDAO.findAll();
 	}
 }

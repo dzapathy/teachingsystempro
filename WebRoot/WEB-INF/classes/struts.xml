@@ -177,6 +177,14 @@
 		<action name="play_media" class="mediaPlayAction">
 			<result>/media.jsp</result>
 		</action>
-		
+		<!-- 课程体系 -->
+		<action name="getcoursesystem" class="getCourseSys" method="getCourseSystem">			
+		</action>
+		<!-- 获取前驱课程 -->
+		<action name="getprecourse" class="changeCourseSysAction" method="getCoursePrev"></action>
+		<!-- 修改前驱课程 -->
+		<action name="changeprecourse" class="changeCourseSysAction" method="changeCoursePrev"></action>
+		<!-- 获取所有课程 -->
+		<action name="getallcourse" class="changeCourseSysAction" method="getAllCourse"></action>
 	</package>
 </struts>    

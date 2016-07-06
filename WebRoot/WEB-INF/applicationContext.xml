@@ -50,7 +50,8 @@
 				<value>com/bean/Blank.hbm.xml</value>
 				<value>com/bean/Grade.hbm.xml</value>
 				<value>com/bean/Paperdetail.hbm.xml</value>
-				<value>com/bean/Paperform.hbm.xml</value></list>
+				<value>com/bean/Paperform.hbm.xml</value>
+				<value>com/bean/Coursesystem.hbm.xml</value></list>
 		</property></bean>
 	
 	<!-- Dao层配置 -->
@@ -106,6 +107,9 @@
 	<bean id="PaperformDAO" class="com.dao.PaperformDAO">
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
+	<bean id="CoursesystemDAO" class="com.dao.CoursesystemDAO">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
 	<!-- Service,Action配置 -->
 	<!-- 登录 -->
 	<bean id="loginService" class="com.serviceImpl.LoginServiceImpl">
@@ -116,6 +120,7 @@
 		<property name="mediaDAO" ref="MediaDAO"></property>
 		<property name="pptDAO" ref="PptDAO"></property>
 		<property name="teachesDAO" ref="TeachesDAO"></property>
+		<property name="coursesystemDAO" ref="CoursesystemDAO"></property>
 	</bean>
 	<bean id="loginAction" class="com.action.LoginAction" scope="prototype">
 		<property name="loginService" ref="loginService"></property>
@@ -274,5 +279,13 @@
 	<!-- 导入学生  -->
 	<bean id="addStudentAction" class="com.action.AddStudentAction" scope="prototype">
 		<property name="studentManageService" ref="studentManageService"></property>
+	</bean>
+	<!-- 课程体系 -->
+	<bean id="getCourseSys" class="com.action.GetCourseSystemAction" scope="prototype">
+		<property name="courseSevice" ref="courseService"></property>
+	</bean>
+	<!-- 修改课程体系 -->
+	<bean id="changeCourseSysAction" class="com.action.ChangeCourseSysAction" scope="prototype">
+		<property name="courseSevice" ref="courseService"></property>
 	</bean>
 </beans>	
